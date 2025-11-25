@@ -45,18 +45,15 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'
 .about-card{display:flex;flex-direction:column;gap:12px}
 .about-actions{display:flex;gap:10px}
 
-/* chips */
 .chips{display:flex;gap:10px;flex-wrap:wrap}
 .chip{border-radius:999px;padding:8px 12px;border:1px solid var(--border);color:var(--muted);background:rgba(255,255,255,0.02);font-weight:600}
 
-/* skills */
 .skill-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:14px}
 .meter{height:12px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;border:1px solid var(--border)}
 .meter>span{display:block;height:100%;background:linear-gradient(90deg,var(--brand),var(--brand2));width:0%;transition:width 900ms cubic-bezier(.2,.9,.2,1)}
 
-/* projects grid */
 .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
-.project{overflow:hidden;transition:transform .35s ease, box-shadow .35s ease}
+.project{overflow:hidden;transition:transform .35s ease, box-shadow .35s ease;will-change:transform,opacity}
 .project .thumb{height:160px;border-radius:12px;overflow:hidden;border:1px solid var(--border)}
 .project .thumb img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
 .project:hover .thumb img{transform:scale(1.08)}
@@ -65,20 +62,16 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'
 .tags{color:var(--muted);font-size:.9rem;margin-top:8px}
 .muted{color:var(--muted)}
 
-/* timeline */
 .timeline{display:flex;flex-direction:column;gap:12px}
 .titem{position:relative;overflow:hidden}
 
-/* contact */
 .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:16px}
 .contact-form input, .contact-form textarea{width:100%;padding:10px;border-radius:10px;border:1px solid var(--border);background:rgba(255,255,255,0.02);color:var(--text)}
 .contact-form textarea{min-height:120px;resize:vertical}
 .form-row{display:flex;gap:8px;align-items:center}
 
-/* footer */
 .site-footer{border-top:1px solid var(--border);padding:20px 0;text-align:center;color:var(--muted);background:linear-gradient(0deg,rgba(0,0,0,0.15),transparent)}
 
-/* modal */
 .modal{position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(3,6,12,.6);backdrop-filter:blur(4px);opacity:0;pointer-events:none;transition:opacity 240ms ease}
 .modal[aria-hidden="false"]{opacity:1;pointer-events:auto}
 .modal-content{max-width:920px;width:94%;background:linear-gradient(180deg, rgba(10,14,22,.98), rgba(14,20,32,.98));border-radius:12px;padding:18px;border:1px solid var(--border)}
@@ -87,7 +80,6 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'
 .modal-meta{flex:1}
 .modal-close{position:absolute;right:18px;top:18px;background:transparent;border:0;color:var(--text);font-size:18px;cursor:pointer}
 
-/* small screens */
 @media (max-width:920px){
   .hero{grid-template-columns:1fr;gap:20px}
   .avatar{width:220px;height:220px}
@@ -101,8 +93,27 @@ body{margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,'
   .header-inner{gap:8px}
 }
 
-/* light theme */
 body.light{
   --bg:#f7f9fe;--bg2:#ffffff;--text:#071023;--muted:#5b6f8f;--brand:#3b82f6;--brand2:#22d3ee;--border:#dbe5ff;--card:#ffffff;--glow:rgba(59,130,246,.12);--glass: rgba(7,16,35,0.03);
 }
 .sr-only{position:absolute!important;height:1px;width:1px;overflow:hidden;clip:rect(1px,1px,1px,1px);white-space:nowrap}
+
+/* Project card entrance animation (staggered) */
+.project-card{opacity:0;transform:translateY(28px) scale(.995);transition:opacity .6s cubic-bezier(.2,.9,.2,1) var(--delay,0ms), transform .6s cubic-bezier(.2,.9,.2,1) var(--delay,0ms);will-change:transform,opacity}
+.project-card.appear{opacity:1;transform:translateY(0) scale(1);box-shadow:0 12px 30px rgba(2,6,23,.45)}
+
+/* combined with existing pre-reveal/reveal */
+.pre-reveal{opacity:0;transform:translateY(10px);transition:opacity .6s ease,transform .6s ease}
+.reveal{opacity:1;transform:translateY(0)}
+
+/* subtle hover glow for project cards */
+.project-card:hover{box-shadow:0 20px 50px rgba(2,6,23,.6);transform:translateY(-6px) scale(1.01)}
+
+/* small visual tweak for modal image */
+.modal-img{height:200px}
+
+/* responsive tweak for skill cards layout */
+@media (max-width:720px){
+  .skill-cards{grid-template-columns:repeat(2,1fr)}
+  .project-card{margin-inline:0}
+}
